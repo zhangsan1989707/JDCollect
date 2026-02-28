@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JD Collector - 数据管理</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #007bff;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+    .btn-danger:hover {
+      background-color: #bd2130;
+    }
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #888;
+    }
+    .checkbox-col {
+      width: 40px;
+      text-align: center;
+    }
+    .action-col {
+      width: 80px;
+      text-align: center;
+    }
+    .btn-feishu {
+      background-color: #28a745;
+      color: white;
+    }
+    .btn-feishu:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>已采集职位数据 (<span id="count">0</span>)</h1>
+      <div class="actions">
+        <button id="refreshBtn" class="btn-secondary">刷新</button>
+        <button id="syncFeishuBtn" class="btn-feishu">同步到飞书</button>
+        <button id="exportBtn" class="btn-primary">导出 CSV</button>
+        <button id="clearBtn" class="btn-danger">清空所有</button>
+      </div>
+    </header>
+    
+    <div id="table-container">
+      <table id="jobsTable">
+        <thead>
+          <tr>
+            <th class="checkbox-col"><input type="checkbox" id="selectAll"></th>
+            <th>职位名称</th>
+            <th>公司</th>
+            <th>薪资</th>
+            <th>地点</th>
+            <th>经验/学历</th>
+            <th>是否投递</th>
+            <th>投递结果</th>
+            <th class="action-col">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 数据行 -->
+        </tbody>
+      </table>
+      <div id="emptyState" class="empty-state" style="display: none;">
+        暂无数据，请前往招聘网站进行采集。
+      </div>
+    </div>
+  </div>
+  <script src="dashboard.js"></script>
+</body>
+</html>

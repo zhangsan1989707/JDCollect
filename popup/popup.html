@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JD Collector</title>
+  <style>
+    body {
+      width: 320px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 15px;
+      background-color: #f9f9f9;
+    }
+    .branding { text-align: center; margin-bottom: 12px; }
+    .branding img { width: 64px; height: 64px; object-fit: contain; display: block; margin: 0 auto 6px; }
+    .branding .title { font-size: 16px; color: #333; font-weight: 600; }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    button.secondary {
+      background-color: #6c757d;
+    }
+    button.secondary:hover {
+      background-color: #5a6268;
+    }
+    #status {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      min-height: 20px;
+    }
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 10px;
+      color: #aaa;
+    }
+    .settings-panel {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+    }
+    .settings-toggle {
+      font-size: 12px;
+      color: #007bff;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .settings-content {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .settings-content.open {
+      display: flex;
+    }
+    .settings-content input {
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .settings-content label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+    }
+    .save-btn {
+      background-color: #28a745;
+      margin-top: 5px;
+    }
+    .save-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="branding">
+    <img src="../new-logo/JDCollect插件logo设计.png" alt="JDCollect Logo" />
+    <div class="title">JD Collector</div>
+  </div>
+  <div class="btn-group">
+    <button id="collectCurrentBtn">采集当前页职位</button>
+    <button id="viewDataBtn" class="secondary">查看已采集数据</button>
+    <button id="exportCsvBtn" class="secondary">导出所有数据 (CSV)</button>
+    <button id="clearDataBtn" class="secondary" style="background-color: #dc3545;">清空数据</button>
+  </div>
+  
+  <div class="settings-panel">
+    <div class="settings-toggle" id="settingsToggle">⚙️ 飞书同步配置 (点击展开)</div>
+    <div class="settings-content" id="settingsContent">
+      <label>App ID</label>
+      <input type="text" id="feishuAppId" placeholder="cli_..." />
+      
+      <label>App Secret</label>
+      <input type="password" id="feishuAppSecret" placeholder="应用密钥" />
+      
+      <label>App Token (Base ID)</label>
+      <input type="text" id="feishuAppToken" placeholder="多维表格 URL 中的 app_token" />
+      
+      <label>Table ID</label>
+      <input type="text" id="feishuTableId" placeholder="数据表 ID" />
+      
+      <button id="saveSettingsBtn" class="save-btn">保存配置并开启同步</button>
+      <div style="font-size: 10px; color: #666;">
+        * 请确保已创建飞书自建应用并添加 Bitable 权限
+      </div>
+    </div>
+  </div>
+
+  <div id="status">就绪</div>
+  <div class="footer">v1.0.0 | Powered by leohang</div>
+  <script src="popup.js"></script>
+</body>
+</html>

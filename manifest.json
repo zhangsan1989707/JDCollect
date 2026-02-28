@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "JD Collector - 职位采集助手",
+  "version": "1.0.0",
+  "description": "半自动采集BOSS直聘、猎聘等主流招聘网站上的职位信息，支持批量导出CSV。",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://*.zhipin.com/*",
+    "https://*.liepin.com/*",
+    "https://open.feishu.cn/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "new-logo/JDCollect插件logo设计.png",
+      "32": "new-logo/JDCollect插件logo设计.png",
+      "48": "new-logo/JDCollect插件logo设计.png",
+      "128": "new-logo/JDCollect插件logo设计.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.zhipin.com/*", "https://*.liepin.com/*"],
+      "js": ["content/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "new-logo/JDCollect插件logo设计.png",
+    "32": "new-logo/JDCollect插件logo设计.png",
+    "48": "new-logo/JDCollect插件logo设计.png",
+    "128": "new-logo/JDCollect插件logo设计.png"
+  }
+}
