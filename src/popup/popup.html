@@ -5,102 +5,193 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JD Collector</title>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      width: 320px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 15px;
-      background-color: #f9f9f9;
+      width: 340px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 16px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 200px;
     }
-    .branding { text-align: center; margin-bottom: 12px; }
-    .branding img { width: 64px; height: 64px; object-fit: contain; display: block; margin: 0 auto 6px; }
-    .branding .title { font-size: 16px; color: #333; font-weight: 600; }
+    .branding {
+      text-align: center;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .branding img { width: 48px; height: 48px; object-fit: contain; display: block; margin: 0 auto 6px; }
+    .branding .title { font-size: 16px; color: #1a1a2e; font-weight: 700; }
+    .branding .subtitle { font-size: 11px; color: #888; margin-top: 2px; }
+    .storage-bar {
+      background: white;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .storage-bar .label { font-size: 11px; color: #666; display: flex; justify-content: space-between; }
+    .storage-bar .bar { height: 4px; background: #e9ecef; border-radius: 2px; margin-top: 4px; overflow: hidden; }
+    .storage-bar .bar-fill { height: 100%; background: linear-gradient(90deg, #28a745, #ffc107, #dc3545); border-radius: 2px; transition: width 0.3s; }
     .btn-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     button {
-      padding: 10px;
+      padding: 10px 12px;
       border: none;
-      border-radius: 5px;
-      background-color: #007bff;
-      color: white;
+      border-radius: 8px;
       cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    button:active { transform: scale(0.98); }
+    .btn-collect {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
       font-size: 14px;
-      transition: background-color 0.3s;
+      padding: 12px;
     }
-    button:hover {
-      background-color: #0056b3;
+    .btn-collect:hover { opacity: 0.9; }
+    .btn-auto {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
     }
-    button.secondary {
-      background-color: #6c757d;
+    .btn-auto:hover { opacity: 0.9; }
+    .btn-auto.running {
+      background: linear-gradient(135deg, #dc3545, #c82333);
     }
-    button.secondary:hover {
-      background-color: #5a6268;
+    .btn-secondary {
+      background: white;
+      color: #495057;
+      border: 1px solid #dee2e6;
     }
+    .btn-secondary:hover { background: #f8f9fa; }
+    .btn-danger {
+      background: white;
+      color: #dc3545;
+      border: 1px solid #f5c6cb;
+    }
+    .btn-danger:hover { background: #fff5f5; }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-row button { flex: 1; }
     #status {
-      margin-top: 15px;
+      margin-top: 12px;
       font-size: 12px;
       color: #666;
       text-align: center;
-      min-height: 20px;
+      min-height: 18px;
+      padding: 6px;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     }
-    .footer {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 10px;
-      color: #aaa;
-    }
+    #status.error { color: #dc3545; }
+    #status.success { color: #28a745; }
     .settings-panel {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid #ddd;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.08);
     }
     .settings-toggle {
       font-size: 12px;
-      color: #007bff;
+      color: #667eea;
       cursor: pointer;
       text-align: center;
-      margin-bottom: 10px;
+      padding: 6px;
+      border-radius: 6px;
+      transition: background 0.2s;
     }
+    .settings-toggle:hover { background: rgba(102,126,234,0.08); }
     .settings-content {
       display: none;
       flex-direction: column;
       gap: 8px;
+      margin-top: 8px;
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     }
-    .settings-content.open {
-      display: flex;
-    }
+    .settings-content.open { display: flex; }
     .settings-content input {
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 8px;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
       font-size: 12px;
+      outline: none;
+      transition: border-color 0.2s;
     }
+    .settings-content input:focus { border-color: #667eea; }
     .settings-content label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      color: #555;
+      color: #495057;
     }
     .save-btn {
-      background-color: #28a745;
-      margin-top: 5px;
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      margin-top: 4px;
     }
-    .save-btn:hover {
-      background-color: #218838;
+    .save-btn:hover { opacity: 0.9; }
+    .footer {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 10px;
+      color: #aaa;
     }
+    .platform-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      margin: 0 2px;
+    }
+    .platform-zhipin { background: #e8f5e9; color: #2e7d32; }
+    .platform-liepin { background: #fff3e0; color: #e65100; }
+    .platform-lagou { background: #e3f2fd; color: #1565c0; }
+    .platform-zhaopin { background: #fce4ec; color: #c62828; }
   </style>
 </head>
 <body>
   <div class="branding">
     <img src="../assets/logo.png" alt="JDCollect Logo" />
     <div class="title">JD Collector</div>
+    <div class="subtitle">
+      <span class="platform-badge platform-zhipin">BOSS直聘</span>
+      <span class="platform-badge platform-liepin">猎聘</span>
+      <span class="platform-badge platform-lagou">拉勾</span>
+      <span class="platform-badge platform-zhaopin">智联</span>
+    </div>
   </div>
+
+  <div class="storage-bar" id="storageBar">
+    <div class="label">
+      <span>存储空间</span>
+      <span id="storageText">计算中...</span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="storageFill" style="width: 0%"></div></div>
+  </div>
+
   <div class="btn-group">
-    <button id="collectCurrentBtn">采集当前页职位</button>
-    <button id="viewDataBtn" class="secondary">查看已采集数据</button>
-    <button id="exportCsvBtn" class="secondary">导出所有数据 (CSV)</button>
-    <button id="clearDataBtn" class="secondary" style="background-color: #dc3545;">清空数据</button>
+    <button id="collectCurrentBtn" class="btn-collect">🔍 采集当前页职位</button>
+    <button id="autoCollectBtn" class="btn-auto">⚡ 自动翻页采集</button>
+    <div class="btn-row">
+      <button id="viewDataBtn" class="btn-secondary">📊 查看数据</button>
+      <button id="exportCsvBtn" class="btn-secondary">📥 导出CSV</button>
+    </div>
+    <button id="clearDataBtn" class="btn-danger">🗑️ 清空数据</button>
   </div>
 
   <div class="settings-panel">
@@ -108,19 +199,15 @@
     <div class="settings-content" id="settingsContent">
       <label>App ID</label>
       <input type="text" id="feishuAppId" placeholder="cli_..." />
-
       <label>App Secret</label>
       <input type="password" id="feishuAppSecret" placeholder="应用密钥" />
-
       <label>App Token (Base ID)</label>
       <input type="text" id="feishuAppToken" placeholder="多维表格 URL 中的 app_token" />
-
       <label>Table ID</label>
       <input type="text" id="feishuTableId" placeholder="数据表 ID" />
-
-      <button id="saveSettingsBtn" class="save-btn">保存配置并开启同步</button>
-      <div style="font-size: 10px; color: #666;">
-        * 请确保已创建飞书自建应用并添加 Bitable 权限
+      <button id="saveSettingsBtn" class="save-btn">💾 保存配置并开启同步</button>
+      <div style="font-size: 10px; color: #888; text-align: center;">
+        * 密钥将加密存储，请确保已创建飞书自建应用并添加 Bitable 权限
       </div>
     </div>
   </div>
