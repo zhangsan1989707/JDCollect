@@ -42,6 +42,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case 'import_csv':
       importCsv(request.data, sendResponse);
       return true;
+    case 'auto_collect_progress':
+      chrome.runtime.sendMessage({
+        action: 'auto_collect_progress',
+        collected: request.collected,
+        page: request.page,
+        maxPages: request.maxPages
+      }).catch(() => {});
+      break;
     default:
       break;
   }

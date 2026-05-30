@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   loadStorageUsage();
 
+  chrome.runtime.onMessage.addListener((request) => {
+    if (request.action === 'auto_collect_progress') {
+      updateStatus(`自动采集中... 已采集 ${request.collected} 条 / 第 ${request.page} 页`);
+    }
+  });
+
   function updateStatus(message, type = '') {
     statusDiv.textContent = message;
     statusDiv.className = type;

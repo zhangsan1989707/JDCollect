@@ -366,11 +366,18 @@ async function startAutoCollect() {
       });
     }
 
+    pageCount++;
+    chrome.runtime.sendMessage({
+      action: 'auto_collect_progress',
+      collected: totalCollected,
+      page: pageCount,
+      maxPages
+    });
+
     const nextBtn = document.querySelector(config.listPage.pagination?.nextButton);
     if (!nextBtn || nextBtn.disabled || nextBtn.classList.contains('disabled')) break;
 
     nextBtn.click();
-    pageCount++;
     await new Promise(r => setTimeout(r, 2000 + Math.random() * 1500));
     await new Promise(r => {
       const check = setInterval(() => {
