@@ -1,0 +1,25 @@
+{
+  "name": "拉勾",
+  "domain": "lagou.com",
+  "detailPage": {
+    "urlPattern": "",
+    "selectors": {
+      "title": "",
+      "salary": "",
+      "company": "",
+      "location": "",
+      "description": ""
+    }
+  },
+  "listPage": {
+    "urlPattern": "",
+    "selectors": {
+      "jobCard": "",
+      "title": "",
+      "salary": "",
+      "company": "",
+      "location": "",
+      "link": ""
+    }
+  }
+}

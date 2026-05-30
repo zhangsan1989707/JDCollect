@@ -1,0 +1,25 @@
+{
+  "name": "猎聘",
+  "domain": "liepin.com",
+  "detailPage": {
+    "urlPattern": "/job/",
+    "selectors": {
+      "title": "h1",
+      "salary": ".job-title-box .salary",
+      "company": ".job-company-box .company-name",
+      "location": ".job-dq",
+      "description": ".job-intro-content"
+    }
+  },
+  "listPage": {
+    "urlPattern": "/zhaopin/",
+    "selectors": {
+      "jobCard": ".job-list-item",
+      "title": "",
+      "salary": "",
+      "company": "",
+      "location": "",
+      "link": ""
+    }
+  }
+}

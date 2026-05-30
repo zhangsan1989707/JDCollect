@@ -1,0 +1,25 @@
+{
+  "name": "智联招聘",
+  "domain": "zhaopin.com",
+  "detailPage": {
+    "urlPattern": "",
+    "selectors": {
+      "title": "",
+      "salary": "",
+      "company": "",
+      "location": "",
+      "description": ""
+    }
+  },
+  "listPage": {
+    "urlPattern": "",
+    "selectors": {
+      "jobCard": "",
+      "title": "",
+      "salary": "",
+      "company": "",
+      "location": "",
+      "link": ""
+    }
+  }
+}

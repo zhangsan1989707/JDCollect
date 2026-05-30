@@ -1,0 +1,25 @@
+{
+  "name": "BOSS直聘",
+  "domain": "zhipin.com",
+  "detailPage": {
+    "urlPattern": "/job_detail/",
+    "selectors": {
+      "title": ".job-name .name h1",
+      "salary": ".job-banner .salary",
+      "company": ".sider-company .company-name",
+      "location": ".job-banner p",
+      "description": ".job-sec-text"
+    }
+  },
+  "listPage": {
+    "urlPattern": "/web/geek/job",
+    "selectors": {
+      "jobCard": ".job-card-wrapper",
+      "title": ".job-name",
+      "salary": ".salary",
+      "company": ".company-name",
+      "location": ".job-area",
+      "link": "a.job-card-left"
+    }
+  }
+}

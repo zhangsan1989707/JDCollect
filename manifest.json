@@ -17,10 +17,10 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "16": "new-logo/JDCollect插件logo设计.png",
-      "32": "new-logo/JDCollect插件logo设计.png",
-      "48": "new-logo/JDCollect插件logo设计.png",
-      "128": "new-logo/JDCollect插件logo设计.png"
+      "16": "assets/icon16.png",
+      "32": "assets/icon48.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
     }
   },
   "background": {
@@ -34,9 +34,9 @@
     }
   ],
   "icons": {
-    "16": "new-logo/JDCollect插件logo设计.png",
-    "32": "new-logo/JDCollect插件logo设计.png",
-    "48": "new-logo/JDCollect插件logo设计.png",
-    "128": "new-logo/JDCollect插件logo设计.png"
+    "16": "assets/icon16.png",
+    "32": "assets/icon48.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
   }
 }

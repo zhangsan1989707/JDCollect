@@ -1,0 +1,13 @@
+{
+  "name": "jd-collector",
+  "version": "1.0.0",
+  "description": "半自动采集BOSS直聘、猎聘等主流招聘网站上的职位信息，支持批量导出CSV。",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
