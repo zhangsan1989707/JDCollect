@@ -2,24 +2,33 @@
   "name": "拉勾",
   "domain": "lagou.com",
   "detailPage": {
-    "urlPattern": "",
+    "urlPattern": "/job/",
+    "detectSelector": ".job-detail,.job-description",
     "selectors": {
-      "title": "",
-      "salary": "",
-      "company": "",
-      "location": "",
-      "description": ""
+      "title": [".job-name span", ".job-name", "h1"],
+      "salary": [".job-salary", ".salary"],
+      "company": [".company-name a", ".job-company .company-name", ".c-feature-name"],
+      "location": [".job-location", ".job-address"],
+      "experience": [".job-advantage span:nth-child(1)", ".job-request span:nth-child(2)"],
+      "education": [".job-advantage span:nth-child(2)", ".job-request span:nth-child(3)"],
+      "description": [".job-description", ".job-detail-section", ".job_bt"]
     }
   },
   "listPage": {
-    "urlPattern": "",
+    "urlPattern": "/zhaopin/",
+    "detectSelector": ".position-list,.list-content",
     "selectors": {
-      "jobCard": "",
-      "title": "",
-      "salary": "",
-      "company": "",
-      "location": "",
-      "link": ""
+      "jobCard": ".position-list-item,.item__10RTO",
+      "title": ".position-name,.p-top a span",
+      "salary": ".salary,.p-bottom span",
+      "company": ".company-name a,.c-feature-name",
+      "location": ".position-location,.industry",
+      "link": "a.position-name,a[href*=\"/job/\"]",
+      "industry": ".industry"
+    },
+    "pagination": {
+      "nextButton": ".pager_next,a.next",
+      "pageIndicator": ".pager_current,.active"
     }
   }
 }

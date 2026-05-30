@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "JD Collector - 职位采集助手",
-  "version": "1.0.0",
-  "description": "半自动采集BOSS直聘、猎聘等主流招聘网站上的职位信息，支持批量导出CSV。",
+  "version": "2.0.0",
+  "description": "半自动采集BOSS直聘、猎聘、拉勾、智联招聘等主流招聘网站上的职位信息，支持批量导出CSV、飞书同步、投递管理。",
   "permissions": [
     "activeTab",
     "storage",
@@ -12,6 +12,8 @@
   "host_permissions": [
     "https://*.zhipin.com/*",
     "https://*.liepin.com/*",
+    "https://*.lagou.com/*",
+    "https://*.zhaopin.com/*",
     "https://open.feishu.cn/*"
   ],
   "action": {
@@ -28,7 +30,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*.zhipin.com/*", "https://*.liepin.com/*"],
+      "matches": [
+        "https://*.zhipin.com/*",
+        "https://*.liepin.com/*",
+        "https://*.lagou.com/*",
+        "https://*.zhaopin.com/*"
+      ],
       "js": ["content/content.js"],
       "run_at": "document_idle"
     }

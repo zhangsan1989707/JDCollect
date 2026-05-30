@@ -2,24 +2,33 @@
   "name": "智联招聘",
   "domain": "zhaopin.com",
   "detailPage": {
-    "urlPattern": "",
+    "urlPattern": "/jobs/",
+    "detectSelector": ".job-detail-box,.summary-plane__title",
     "selectors": {
-      "title": "",
-      "salary": "",
-      "company": "",
-      "location": "",
-      "description": ""
+      "title": [".summary-plane__title", "h1", ".job-name"],
+      "salary": [".summary-plane__salary", ".salary"],
+      "company": [".company-info__name a", ".company-name a"],
+      "location": [".job-location", ".job-address"],
+      "experience": [".summary-plane__info span:nth-child(2)", ".job-advantage span"],
+      "education": [".summary-plane__info span:nth-child(3)", ".job-advantage span"],
+      "description": [".job-description-section", ".describtion__detail-content"]
     }
   },
   "listPage": {
-    "urlPattern": "",
+    "urlPattern": "/sou/",
+    "detectSelector": ".joblist-box,.positionlist",
     "selectors": {
-      "jobCard": "",
-      "title": "",
-      "salary": "",
-      "company": "",
-      "location": "",
-      "link": ""
+      "jobCard": ".joblist-box__item,.positionlist__item",
+      "title": ".jobinfo__top a,.job-name",
+      "salary": ".jobinfo__salary,.salary",
+      "company": ".companyinfo__top a,.company-name",
+      "location": ".jobinfo__other span:first-child,.job-area",
+      "link": "a.jobinfo__top,a[href*=\"/jobs/\"]",
+      "industry": ".companyinfo__tag"
+    },
+    "pagination": {
+      "nextButton": ".soupager__next,a.next",
+      "pageIndicator": ".soupager__current,.active"
     }
   }
 }

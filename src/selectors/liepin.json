@@ -3,23 +3,32 @@
   "domain": "liepin.com",
   "detailPage": {
     "urlPattern": "/job/",
+    "detectSelector": ".job-title-box",
     "selectors": {
-      "title": "h1",
-      "salary": ".job-title-box .salary",
-      "company": ".job-company-box .company-name",
-      "location": ".job-dq",
-      "description": ".job-intro-content"
+      "title": ["h1", ".job-title-box .name"],
+      "salary": [".job-title-box .salary", ".salary"],
+      "company": [".job-company-box .company-name", ".company-info-container h3", "aside .company-name"],
+      "location": [".job-dq"],
+      "experience": [".job-qualifications span:nth-child(1)"],
+      "education": [".job-qualifications span:nth-child(2)"],
+      "description": [".job-intro-content"]
     }
   },
   "listPage": {
     "urlPattern": "/zhaopin/",
+    "detectSelector": ".job-list-item,.job-list",
     "selectors": {
-      "jobCard": ".job-list-item",
-      "title": "",
-      "salary": "",
-      "company": "",
-      "location": "",
-      "link": ""
+      "jobCard": ".job-list-item,.job-card-wrapper",
+      "title": ".job-title,.job-name",
+      "salary": ".job-salary,.salary",
+      "company": ".company-name,.job-company",
+      "location": ".job-area,.job-dq",
+      "link": "a[href*=\"/job/\"]",
+      "industry": ".company-tag-list"
+    },
+    "pagination": {
+      "nextButton": ".pager .next,a.next",
+      "pageIndicator": ".pager .current,.pager .active"
     }
   }
 }

@@ -4,11 +4,13 @@
   "detailPage": {
     "urlPattern": "/job_detail/",
     "selectors": {
-      "title": ".job-name .name h1",
-      "salary": ".job-banner .salary",
-      "company": ".sider-company .company-name",
-      "location": ".job-banner p",
-      "description": ".job-sec-text"
+      "title": [".job-name .name h1", "h1"],
+      "salary": [".job-banner .salary", ".salary"],
+      "company": [".sider-company .company-name", ".job-sec.company-info .name", ".business-info h4"],
+      "companyInfo": [".sider-company p", ".job-sec.company-info .name + div"],
+      "location": [".job-banner p", ".job-primary .info-primary p"],
+      "description": [".job-sec-text", ".job-detail-section"],
+      "publishTime": [".job-boss-info .boss-active-time"]
     }
   },
   "listPage": {
@@ -19,7 +21,13 @@
       "salary": ".salary",
       "company": ".company-name",
       "location": ".job-area",
-      "link": "a.job-card-left"
+      "tags": ".tag-list span",
+      "link": "a.job-card-left",
+      "industry": ".company-tag-list"
+    },
+    "pagination": {
+      "nextButton": ".options-pages .next",
+      "pageIndicator": ".options-pages .cur"
     }
   }
 }

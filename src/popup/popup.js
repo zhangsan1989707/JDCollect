@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
-      if (!tab.url.includes('zhipin.com') && !tab.url.includes('liepin.com')) {
+      if (!tab.url.includes('zhipin.com') && !tab.url.includes('liepin.com') && !tab.url.includes('lagou.com') && !tab.url.includes('zhaopin.com')) {
         updateStatus('当前页面不是支持的招聘网站', true);
         return;
       }
