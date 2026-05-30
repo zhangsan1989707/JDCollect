@@ -399,12 +399,34 @@ function batchDelete() {
 function batchChangeStatus() {
   const ids = Array.from(document.querySelectorAll('.row-checkbox:checked')).map(cb => cb.dataset.id);
   if (ids.length === 0) return;
-  const status = prompt('输入新状态 (pending/applied/interview/offer/rejected/withdrawn):');
-  if (!status || !JOB_STATUS[status.toUpperCase()]) {
-    alert('无效状态');
-    return;
-  }
-  chrome.runtime.sendMessage({ action: 'batch_update_status', ids, status: status.toLowerCase() }, () => loadData());
+
+  if (activeDropdown) { activeDropdown.remove(); activeDropdown = null; }
+
+  const dropdown = document.createElement('div');
+  dropdown.className = 'status-dropdown';
+
+  Object.entries(JOB_STATUS).forEach(([key, value]) => {
+    const item = document.createElement('div');
+    item.className = 'status-dropdown-item';
+    item.innerHTML = `<span class="status-badge status-${value}">${STATUS_LABELS[value]}</span>`;
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      chrome.runtime.sendMessage({ action: 'batch_update_status', ids, status: value }, () => {
+        dropdown.remove();
+        activeDropdown = null;
+        loadData();
+      });
+    });
+    dropdown.appendChild(item);
+  });
+
+  const btn = document.getElementById('batchStatusBtn');
+  const rect = btn.getBoundingClientRect();
+  dropdown.style.position = 'fixed';
+  dropdown.style.left = rect.left + 'px';
+  dropdown.style.top = (rect.bottom + 4) + 'px';
+  document.body.appendChild(dropdown);
+  activeDropdown = dropdown;
 }
 
 function batchAddTag() {
