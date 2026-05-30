@@ -1,4 +1,5 @@
 import { STATUS_LABELS, JOB_STATUS } from '../lib/utils.js';
+import { decrypt } from '../lib/crypto.js';
 
 async function getTenantAccessToken(appId, appSecret) {
   try {
@@ -53,7 +54,8 @@ async function syncToFeishu(jobs, callback) {
       return;
     }
 
-    const token = await getTenantAccessToken(config.appId, config.appSecret);
+    const decryptedSecret = await decrypt(config.appSecret, config.appId);
+    const token = await getTenantAccessToken(config.appId, decryptedSecret);
     if (!token) {
       if (callback) callback({ success: false, message: '获取飞书 Access Token 失败' });
       return;

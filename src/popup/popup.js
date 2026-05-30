@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    const encryptedSecret = await encrypt(appSecret);
+    const encryptedSecret = await encrypt(appSecret, appId);
     const config = { appId, appSecret: encryptedSecret, appToken, tableId, enabled: true };
 
     chrome.storage.local.set({ feishuConfig: config }, () => {
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (result.feishuConfig) {
         feishuAppId.value = result.feishuConfig.appId || '';
         if (result.feishuConfig.appSecret) {
-          const decrypted = await decrypt(result.feishuConfig.appSecret);
+          const decrypted = await decrypt(result.feishuConfig.appSecret, result.feishuConfig.appId);
           feishuAppSecret.value = decrypted || '';
         }
         feishuAppToken.value = result.feishuConfig.appToken || '';

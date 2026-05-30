@@ -1,3 +1,4 @@
+// SELECTORS 配置与 src/selectors/*.json 保持同步，修改时请同步更新对应 JSON 文件
 const SELECTORS = {
   zhipin: {
     name: 'BOSS直聘',
