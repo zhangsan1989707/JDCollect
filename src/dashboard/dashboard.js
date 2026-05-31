@@ -1,4 +1,4 @@
-import { escapeHtml, sanitizeHref, JOB_STATUS, STATUS_LABELS, STATUS_COLORS, DEFAULT_TAGS, parseSalaryRange } from '../lib/utils.js';
+import { escapeHtml, sanitizeHref, JOB_STATUS, STATUS_LABELS, STATUS_COLORS, DEFAULT_TAGS, parseSalaryRange, formatSalaryDisplay } from '../lib/utils.js';
 
 const PAGE_SIZE = 20;
 let allJobs = [];
@@ -209,7 +209,7 @@ function renderTable() {
       <td class="star-col"><button class="star-btn ${job.starred ? 'starred' : ''}" data-id="${job.id}">${job.starred ? '★' : '☆'}</button></td>
       <td><a href="${safeUrl}" target="_blank" title="${escapeHtml(job.title)}">${escapeHtml(job.title)}</a></td>
       <td>${escapeHtml(job.company)}</td>
-      <td>${escapeHtml(job.salary)}</td>
+      <td>${formatSalaryDisplay(parseSalaryRange(job.salary || ''))}</td>
       <td>${escapeHtml(job.location)}</td>
       <td>${escapeHtml(job.experience)} / ${escapeHtml(job.education)}</td>
       <td><span class="status-badge ${statusClass}" data-id="${job.id}">${statusLabel}</span></td>

@@ -60,15 +60,89 @@ async function getStorageUsage() {
 }
 
 function parseSalaryRange(salaryStr) {
-  if (!salaryStr) return { min: 0, max: 0, avg: 0 };
-  const match = salaryStr.match(/(\d+)[~-](\d+)/);
-  if (match) {
-    const min = parseInt(match[1]);
-    const max = parseInt(match[2]);
-    const multiplier = /万/.test(salaryStr) ? 10000 : (/k/i.test(salaryStr) ? 1000 : 1);
-    return { min: min * multiplier, max: max * multiplier, avg: (min + max) / 2 * multiplier };
+  if (!salaryStr) return { min: 0, max: 0, avg: 0, currency: 'CNY', unit: 'month', period: 12 };
+  if (salaryStr.includes('面议') || salaryStr.includes('待定')) {
+    return { min: 0, max: 0, avg: 0, currency: 'CNY', unit: 'month', period: 12 };
   }
-  return { min: 0, max: 0, avg: 0 };
+
+  let text = salaryStr.replace(/\s+/g, '').toLowerCase();
+  let multiplier = 1; 
+  let daily = false;
+
+  if (text.includes('年') || text.includes('year')) {
+    multiplier = 1;
+  } else if (text.includes('天') || text.includes('日') || text.includes('day') || text.includes('/天') || text.includes('/日')) {
+    daily = true;
+  }
+
+  let months = 12;
+  const monthMatch = text.match(/[·•\*]\s*(\d+)\s*薪/);
+  if (monthMatch) {
+    months = parseInt(monthMatch[1]);
+    text = text.replace(monthMatch[0], '');
+  }
+
+  let min = 0, max = 0;
+  const rangeMatch = text.match(/(\d+(?:\.\d+)?)\s*[-~至]\s*(\d+(?:\.\d+)?)/);
+  if (rangeMatch) {
+    min = parseFloat(rangeMatch[1]);
+    max = parseFloat(rangeMatch[2]);
+  } else {
+    const singleMatch = text.match(/(\d+(?:\.\d+)?)/);
+    if (singleMatch) {
+      min = max = parseFloat(singleMatch[1]);
+    }
+  }
+
+  let kMultiplier = 1;
+  if (text.includes('k') || text.includes('千')) {
+    kMultiplier = 1000;
+  } else if (text.includes('w') || text.includes('万')) {
+    kMultiplier = 10000;
+  }
+
+  min *= kMultiplier;
+  max *= kMultiplier;
+
+  if (multiplier === 1) {
+    min = min / 12;
+    max = max / 12;
+  }
+
+  if (daily) {
+    min = min * 22;
+    max = max * 22;
+  }
+
+  const avg = min && max ? Math.round((min + max) / 2) : (min || max || 0);
+
+  return {
+    min: Math.round(min),
+    max: Math.round(max),
+    avg: Math.round(avg),
+    currency: 'CNY',
+    unit: 'month',
+    period: months
+  };
+}
+
+function formatSalaryDisplay(salary) {
+  if (!salary) return '面议';
+  if (salary.min === 0 && salary.max === 0) return '面议';
+  
+  const format = (num) => {
+    if (num >= 10000) {
+      return (num / 10000).toFixed(1) + '万';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(0) + 'k';
+    }
+    return num.toString();
+  };
+
+  if (salary.min === salary.max) {
+    return format(salary.min) + '/月';
+  }
+  return format(salary.min) + '-' + format(salary.max) + '/月';
 }
 
 const JOB_STATUS = {
@@ -115,5 +189,5 @@ export {
   getText, escapeHtml, escapeCsv, formatTimestamp,
   safeUrl, sanitizeHref, getStorageUsage, parseSalaryRange,
   JOB_STATUS, STATUS_LABELS, STATUS_COLORS, DEFAULT_TAGS,
-  generateJobId
+  generateJobId, formatSalaryDisplay
 };
